@@ -1,0 +1,16 @@
+<div class="pagination">
+  <button class="nav" (click)="first()" [disabled]="isFirstPage()">« First</button>
+  <button class="nav" (click)="prev()" [disabled]="isFirstPage()">‹ Prev</button>
+
+  <button
+    class="page"
+    *ngFor="let p of getWindowPages()"
+    (click)="goToPage(p)"
+    [class.active]="p === page.currentPage"
+  >
+    {{ p }}
+  </button>
+
+  <button class="nav" (click)="next()" [disabled]="isLastPage()">Next ›</button>
+  <button class="nav" (click)="last()" [disabled]="isLastPage()">Last »</button>
+</div>

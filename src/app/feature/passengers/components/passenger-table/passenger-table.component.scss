@@ -1,0 +1,127 @@
+:host {
+  display: block;
+}
+
+.table-wrapper {
+  height: 600px;
+  overflow: auto;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+
+  --col-passengerId-width: 70px;
+  --col-survived-width: 95px;
+  --col-pclass-width: 60px;
+  --col-name-width: 420px;
+  --col-sex-width: 90px;
+  --col-age-width: 70px;
+  --col-sibsp-width: 70px;
+  --col-parch-width: 70px;
+  --col-ticket-width: 150px;
+  --col-fare-width: 90px;
+  --col-cabin-width: 90px;
+  --col-embarked-width: 95px;
+}
+
+.table-wrapper .passenger-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+  color: #111827;
+}
+
+.table-wrapper .passenger-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background: #f3f4f6;
+  padding: 10px 12px;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+
+  border-bottom: 2px solid #d1d5db;
+  border-right: 1px solid #e5e7eb;
+}
+
+.table-wrapper .passenger-table thead th:last-child {
+  border-right: none;
+}
+
+.table-wrapper .passenger-table th:nth-child(1),
+.table-wrapper .passenger-table td:nth-child(1) {
+  width: var(--col-passengerId-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(2),
+.table-wrapper .passenger-table td:nth-child(2) {
+  width: var(--col-survived-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(3),
+.table-wrapper .passenger-table td:nth-child(3) {
+  width: var(--col-pclass-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(4),
+.table-wrapper .passenger-table td:nth-child(4) {
+  width: var(--col-name-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(5),
+.table-wrapper .passenger-table td:nth-child(5) {
+  width: var(--col-sex-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(6),
+.table-wrapper .passenger-table td:nth-child(6) {
+  width: var(--col-age-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(7),
+.table-wrapper .passenger-table td:nth-child(7) {
+  width: var(--col-sibsp-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(8),
+.table-wrapper .passenger-table td:nth-child(8) {
+  width: var(--col-parch-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(9),
+.table-wrapper .passenger-table td:nth-child(9) {
+  width: var(--col-ticket-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(10),
+.table-wrapper .passenger-table td:nth-child(10) {
+  width: var(--col-fare-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(11),
+.table-wrapper .passenger-table td:nth-child(11) {
+  width: var(--col-cabin-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(12),
+.table-wrapper .passenger-table td:nth-child(12) {
+  width: var(--col-embarked-width);
+}
+
+.table-wrapper .passenger-table th:nth-child(1),
+.table-wrapper .passenger-table th:nth-child(3),
+.table-wrapper .passenger-table th:nth-child(6),
+.table-wrapper .passenger-table th:nth-child(7),
+.table-wrapper .passenger-table th:nth-child(8),
+.table-wrapper .passenger-table th:nth-child(10),
+.table-wrapper .passenger-table td:nth-child(1),
+.table-wrapper .passenger-table td:nth-child(3),
+.table-wrapper .passenger-table td:nth-child(6),
+.table-wrapper .passenger-table td:nth-child(7),
+.table-wrapper .passenger-table td:nth-child(8),
+.table-wrapper .passenger-table td:nth-child(10) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

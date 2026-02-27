@@ -1,0 +1,26 @@
+<div class="details">
+  <a class="back" routerLink="/">← Back to table</a>
+
+  <ng-container *ngIf="passenger; else notFound">
+    <h2>{{ passenger.name }}</h2>
+
+    <div class="grid">
+      <div><b>ID:</b> {{ passenger.passengerId }}</div>
+      <div><b>Survived:</b> {{ passenger.survived | survived }}</div>
+      <div><b>Class:</b> {{ passenger.pclass }}</div>
+      <div><b>Sex:</b> {{ passenger.sex | sex }}</div>
+      <div><b>Age:</b> {{ passenger.age ?? '-' }}</div>
+      <div><b>Ticket:</b> {{ passenger.ticket }}</div>
+      <div><b>Fare:</b> {{ passenger.fare }}</div>
+      <div><b>Cabin:</b> {{ passenger.cabin ?? '-' }}</div>
+      <div><b>Embarked:</b> {{ passenger.embarked ?? '-' | city }}</div>
+      <div><b>SibSp:</b> {{ passenger.sibsp }}</div>
+      <div><b>Parch:</b> {{ passenger.parch }}</div>
+    </div>
+  </ng-container>
+
+  <ng-template #notFound>
+    <h2>Passenger not found</h2>
+    <p>Id-ul din URL nu există.</p>
+  </ng-template>
+</div>

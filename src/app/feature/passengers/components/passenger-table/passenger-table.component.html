@@ -1,1 +1,30 @@
-<p>passenger-table works!</p>
+<div class="table-wrapper">
+  <table class="passenger-table">
+    <thead>
+      <tr class="table-header">
+        <th>ID</th>
+        <th>Survived</th>
+        <th>Class</th>
+        <th>
+          <app-passenger-name-header
+            [sortState]="sortState"
+            (sortClicked)="passengersService.toggleNameSort()"
+          ></app-passenger-name-header>
+        </th>
+        <th>Sex</th>
+        <th>Age</th>
+        <th>SibSp</th>
+        <th>Parch</th>
+        <th>Ticket</th>
+        <th>Fare</th>
+        <th>Cabin</th>
+        <th>Embarked</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr app-passenger-row *ngFor="let passenger of page.passengers" [passenger]="passenger"></tr>
+    </tbody>
+  </table>
+</div>
+<app-pagination [page]="page"></app-pagination>

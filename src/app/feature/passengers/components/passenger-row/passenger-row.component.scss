@@ -1,0 +1,33 @@
+:host {
+  display: table-row;
+}
+
+.name a {
+  display: inline;
+  text-decoration: none;
+  color: black;
+}
+
+:host:hover {
+  background: #e0e0e0;
+  cursor: pointer;
+}
+
+:host td {
+  padding: 9px 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #f1f5f9;
+}
+
+:host td:last-child {
+  border-right: none;
+}
+
+:host:hover td {
+  background: #eaeef3;
+  cursor: pointer;
+}

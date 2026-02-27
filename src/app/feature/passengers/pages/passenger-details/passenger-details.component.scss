@@ -1,0 +1,15 @@
+.details {
+  padding: 16px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  margin-top: 12px;
+}

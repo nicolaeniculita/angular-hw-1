@@ -1,0 +1,1 @@
+export type NameSort = 'NONE' | 'ASC' | 'DESC';

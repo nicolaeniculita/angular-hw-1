@@ -1,0 +1,16 @@
+<td>{{ passenger.passengerId }}</td>
+<td>{{ passenger.survived | survived }}</td>
+<td>{{ passenger.pclass }}</td>
+<td class="name">
+  <a [routerLink]="['/passengers', passenger.passengerId]">
+    {{ passenger.name | passengerName }}
+  </a>
+</td>
+<td>{{ passenger.sex | sex }}</td>
+<td>{{ passenger.age }}</td>
+<td>{{ passenger.sibsp }}</td>
+<td>{{ passenger.parch }}</td>
+<td>{{ passenger.ticket }}</td>
+<td>{{ passenger.fare }}</td>
+<td>{{ passenger.cabin }}</td>
+<td>{{ passenger.embarked }}</td>

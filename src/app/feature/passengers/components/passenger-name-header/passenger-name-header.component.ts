@@ -4,7 +4,7 @@ import { NameSort } from '../../services/name-sort.type';
 @Component({
   selector: 'app-passenger-name-header',
   templateUrl: './passenger-name-header.component.html',
-  styleUrl: './passenger-name-header.component.scss',
+  styleUrls: ['./passenger-name-header.component.scss'],
   standalone: false,
 })
 export class PassengerNameHeaderComponent {

@@ -1,16 +1,47 @@
-<div class="pagination">
-  <button class="nav" (click)="first()" [disabled]="isFirstPage()">« First</button>
-  <button class="nav" (click)="prev()" [disabled]="isFirstPage()">‹ Prev</button>
+<ng-container *ngIf="(page$ | async) as page">
+  <ng-container *ngIf="(paginationUi$ | async) as ui">
+    <div class="pagination">
+      <button class="nav" (click)="first()" [disabled]="!(canGoPrev$ | async)">« First</button>
+      <button class="nav" (click)="prev()" [disabled]="!(canGoPrev$ | async)">‹ Prev</button>
 
-  <button
-    class="page"
-    *ngFor="let p of getWindowPages()"
-    (click)="goToPage(p)"
-    [class.active]="p === page.currentPage"
-  >
-    {{ p }}
-  </button>
+      <button
+        *ngIf="ui.showFirstPage"
+        class="page"
+        (click)="goToPage(ui.firstPage)"
+        [class.active]="ui.firstPage === page.currentPage"
+      >
+        {{ ui.firstPage }}
+      </button>
 
-  <button class="nav" (click)="next()" [disabled]="isLastPage()">Next ›</button>
-  <button class="nav" (click)="last()" [disabled]="isLastPage()">Last »</button>
-</div>
+      <span *ngIf="ui.showLeftEllipsis" class="ellipsis">…</span>
+
+      <button
+        class="page"
+        *ngFor="let p of ui.pages"
+        (click)="goToPage(p)"
+        [class.active]="p === page.currentPage"
+      >
+        {{ p }}
+      </button>
+
+      <span *ngIf="ui.showRightEllipsis" class="ellipsis">…</span>
+
+      <button
+        *ngIf="ui.showLastPage"
+        class="page"
+        (click)="goToPage(ui.lastPage)"
+        [class.active]="ui.lastPage === page.currentPage"
+      >
+        {{ ui.lastPage }}
+      </button>
+
+      <button class="nav" (click)="next()" [disabled]="!(canGoNext$ | async)">Next ›</button>
+      <button class="nav" (click)="last()" [disabled]="!(canGoNext$ | async)">Last »</button>
+    </div>
+
+    <div class="pagination-meta">
+      Showing <strong>{{ page.fromIndex }}</strong>–<strong>{{ page.toIndex }}</strong> of
+      <strong>{{ page.totalItems }}</strong>
+    </div>
+  </ng-container>
+</ng-container>

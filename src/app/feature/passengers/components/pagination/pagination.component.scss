@@ -3,18 +3,32 @@
   justify-content: center;
   margin-top: 18px;
   gap: 4px;
+  align-items: center;
 }
 
 .page {
   margin: 0 2px;
 }
 
-.pagination button:nth-child(3) {
-  margin-left: 20px;
+.ellipsis {
+  padding: 0 6px;
+  user-select: none;
+  color: #6b7280;
 }
 
-.pagination button:nth-child(7) {
-  margin-right: 20px;
+.pagination-meta {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 13px;
+  color: #111827;
+}
+
+.pagination button:nth-child(3) {
+  margin-left: 16px;
+}
+
+.pagination button:nth-last-child(3) {
+  margin-right: 16px;
 }
 
 button {

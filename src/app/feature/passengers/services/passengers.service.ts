@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { PassengerData } from '../../../shared/models/titanic-data.model';
 import { TITANIC_PASSENGERS } from '../../../shared/titanic-data';
@@ -18,13 +18,36 @@ export class PassengersService {
   private readonly tableDataSubject = new BehaviorSubject<PassengerData[]>([]);
   public readonly tableData$: Observable<PassengerData[]> = this.tableDataSubject.asObservable();
 
-  private currentPage: number = 1;
+  private readonly currentPageSubject = new BehaviorSubject<number>(1);
+  public readonly currentPage$: Observable<number> = this.currentPageSubject.asObservable();
+
   private pageSize: number = 15;
 
   private readonly pageSubject = new BehaviorSubject<PassengerPage>(
     this.buildPage([...this.allPassengers]),
   );
   public readonly page$: Observable<PassengerPage> = this.pageSubject.asObservable();
+
+  public readonly paginationUi$: Observable<PaginationUi> = this.page$.pipe(
+    map((page) => this.buildPaginationUi(page.currentPage, page.totalPages, 5)),
+  );
+
+  public readonly isFirstPage$: Observable<boolean> = this.page$.pipe(
+    map((page) => page.currentPage === 1),
+  );
+
+  public readonly isLastPage$: Observable<boolean> = this.page$.pipe(
+    map((page) => page.currentPage === page.totalPages),
+  );
+
+ 
+  public readonly canGoPrev$: Observable<boolean> = this.page$.pipe(
+    map((page) => page.currentPage > 1),
+  );
+
+  public readonly canGoNext$: Observable<boolean> = this.page$.pipe(
+    map((page) => page.currentPage < page.totalPages),
+  );
 
   constructor() {
     this.emitState();
@@ -43,13 +66,53 @@ export class PassengersService {
   }
 
   public setPage(page: number): void {
-    this.currentPage = page;
+    this.currentPageSubject.next(page);
+    this.emitState();
+  }
+
+  public nextPage(): void {
+    const current = this.currentPageSubject.value;
+    const totalPages = this.pageSubject.value.totalPages;
+    if (current >= totalPages) {
+      return;
+    }
+
+    this.currentPageSubject.next(current + 1);
+    this.emitState();
+  }
+
+  public previousPage(): void {
+    const current = this.currentPageSubject.value;
+    if (current <= 1) {
+      return;
+    }
+
+    this.currentPageSubject.next(current - 1);
+    this.emitState();
+  }
+
+  public firstPage(): void {
+    if (this.currentPageSubject.value === 1) {
+      return;
+    }
+
+    this.currentPageSubject.next(1);
+    this.emitState();
+  }
+
+  public lastPage(): void {
+    const last = this.pageSubject.value.totalPages;
+    if (this.currentPageSubject.value === last) {
+      return;
+    }
+
+    this.currentPageSubject.next(last);
     this.emitState();
   }
 
   public setPageSize(size: number): void {
     this.pageSize = size;
-    this.currentPage = 1;
+    this.currentPageSubject.next(1);
     this.emitState();
   }
 
@@ -79,10 +142,13 @@ export class PassengersService {
     const totalItems = viewData.length;
     const totalPages = totalItems === 0 ? 1 : Math.ceil(totalItems / this.pageSize);
 
-    if (this.currentPage < 1) this.currentPage = 1;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    const currentPage = this.currentPageSubject.value;
+    const clampedPage = Math.min(Math.max(currentPage, 1), totalPages);
+    if (clampedPage !== currentPage) {
+      this.currentPageSubject.next(clampedPage);
+    }
 
-    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const startIndex = (clampedPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
 
     const passengers = viewData.slice(startIndex, endIndex);
@@ -92,7 +158,7 @@ export class PassengersService {
 
     return {
       passengers,
-      currentPage: this.currentPage,
+      currentPage: clampedPage,
       pageSize: this.pageSize,
       totalItems,
       totalPages,
@@ -100,4 +166,56 @@ export class PassengersService {
       toIndex,
     };
   }
+
+  private buildPaginationUi(
+    currentPage: number,
+    totalPages: number,
+    windowSize: number,
+  ): PaginationUi {
+    const safeWindowSize = Math.max(1, windowSize);
+    const half = Math.floor(safeWindowSize / 2);
+
+    let start = currentPage - half;
+    let end = currentPage + half;
+
+    if (start < 1) {
+      start = 1;
+      end = Math.min(safeWindowSize, totalPages);
+    }
+
+    if (end > totalPages) {
+      end = totalPages;
+      start = Math.max(1, totalPages - safeWindowSize + 1);
+    }
+
+    const pages: number[] = [];
+    for (let p = start; p <= end; p++) {
+      pages.push(p);
+    }
+
+    const showFirstPage = start > 1;
+    const showLastPage = end < totalPages;
+    const showLeftEllipsis = start > 2;
+    const showRightEllipsis = end < totalPages - 1;
+
+    return {
+      pages,
+      showFirstPage,
+      showLastPage,
+      showLeftEllipsis,
+      showRightEllipsis,
+      firstPage: 1,
+      lastPage: totalPages,
+    };
+  }
 }
+
+export type PaginationUi = {
+  pages: number[];
+  showFirstPage: boolean;
+  showLastPage: boolean;
+  showLeftEllipsis: boolean;
+  showRightEllipsis: boolean;
+  firstPage: number;
+  lastPage: number;
+};

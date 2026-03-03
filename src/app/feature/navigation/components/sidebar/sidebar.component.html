@@ -1,0 +1,18 @@
+<nav class="sidebar" aria-label="Primary navigation">
+  <a
+    *ngFor="let item of navItems"
+    class="sidebar-item"
+    [routerLink]="item.route"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [attr.aria-label]="item.label"
+  >
+    <span class="active-indicator" aria-hidden="true"></span>
+
+    <span class="sidebar-icon" aria-hidden="true">
+      <img class="sidebar-icon-img" [src]="item.iconSrc" alt="" />
+    </span>
+
+    <span class="sidebar-label">{{ item.label }}</span>
+  </a>
+</nav>

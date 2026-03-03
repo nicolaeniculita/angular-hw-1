@@ -5,7 +5,6 @@ import { PassengerData } from '../../../../shared/models/titanic-data.model';
 
 @Component({
   selector: 'app-passenger-details',
-  // imports: [],
   templateUrl: './passenger-details.component.html',
   styleUrl: './passenger-details.component.scss',
   standalone: false,

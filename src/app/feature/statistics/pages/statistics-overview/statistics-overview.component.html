@@ -1,0 +1,36 @@
+<section class="stats-page">
+  <h1 class="title">Titanic Statistics</h1>
+
+  <div class="section">
+    <h2 class="section-title">General Overview</h2>
+    <div class="grid grid-4">
+      <app-custom-statistic
+        *ngFor="let c of generalCards"
+        [label]="c.label"
+        [value]="c.value"
+      ></app-custom-statistic>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Gender Statistics</h2>
+    <div class="grid grid-6">
+      <app-custom-statistic
+        *ngFor="let c of genderCards"
+        [label]="c.label"
+        [value]="c.value"
+      ></app-custom-statistic>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Class Statistics</h2>
+    <div class="grid grid-6">
+      <app-custom-statistic
+        *ngFor="let c of classCards"
+        [label]="c.label"
+        [value]="c.value"
+      ></app-custom-statistic>
+    </div>
+  </div>
+</section>

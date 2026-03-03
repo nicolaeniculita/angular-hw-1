@@ -8,11 +8,16 @@
 
 .main-content {
   margin-top: 60px;
-  padding: 40px 16px;
   flex: 1;
   overflow-y: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+.page-content {
+  padding: 24px 16px;
+  flex: 1;
+  overflow: auto;
 }
 
 app-main-table {
